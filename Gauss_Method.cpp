@@ -39,7 +39,7 @@ void Leaderelem(int k, float** mas, int n, float* por_korney){
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");
 
 	int n;
 	printf("¬ведите размер матрицы: ");

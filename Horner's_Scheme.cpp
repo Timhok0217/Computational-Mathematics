@@ -4,7 +4,7 @@
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");
 
 	printf("¬ведите максимальную степень многочлена: ");
 	int n;

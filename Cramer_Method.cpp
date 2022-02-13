@@ -56,7 +56,7 @@ float Determ(float** bmass, int m, float* b) {
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");
 	// Основная матрица
 	int m;
 	printf("Введите размер матрицы: ");

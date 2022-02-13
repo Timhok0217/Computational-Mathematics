@@ -4,7 +4,7 @@
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");
 
 	const int len_count = 6;
 	const int wid_count = 6;

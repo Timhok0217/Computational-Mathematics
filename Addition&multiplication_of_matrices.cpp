@@ -39,7 +39,7 @@ void Plus(float** mass, float**mass2, int n, int m, int n2, int m2) {
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");
 	// ќсновна€ матрица
 	int n, m, n2, m2;
 	printf("¬ведите кол-во строк первой матрицы: ");
