@@ -4,33 +4,31 @@
 #include <math.h>
 #include <malloc.h>
 
-// Получение дополнительного минора матрицы без i-й строки и j-го столбца
 void Minor(float** array, float** temparr, int i, int j, int m) {
 	int ki, kj, di, dj;
 	di = 0;
-	for (ki = 0; ki < (m - 1); ki++) { // проверка индекса строки
+	for (ki = 0; ki < (m - 1); ki++) { 
 		if (ki == i) di = 1;
 		dj = 0;
-		for (kj = 0; kj < (m - 1); kj++) { // проверка индекса столбца
+		for (kj = 0; kj < (m - 1); kj++) { 
 			if (kj == j) dj = 1;
 			temparr[ki][kj] = array[ki + di][kj + dj];
 		}
 	}
 }
 
-// Рекурсивное вычисление определителя
 float Determ(float** bmass, int m, float* b) {
 	float** temparr = (float**)malloc(m * m * sizeof(float*));
 	for (int i = 0; i < m; i++)
 		temparr[i] = (float*)malloc(m * sizeof(float));
 
 	int j = 0; 
-	float det = 0; //определитель
-	int k = 1; //(-1) в степени i
+	float det = 0; 
+	int k = 1; 
 	int m1 = m - 1;
 
 	if (m < 1)
-		printf("Определитель найти невозможно!");
+		printf("Determ not found!");
 
 	if (m == 1) {
 		det = bmass[0][0];
@@ -57,14 +55,13 @@ float Determ(float** bmass, int m, float* b) {
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	// Основная матрица
+
 	int m;
-	printf("Введите размер матрицы: ");
+	printf("Enter size of matrix: ");
 	scanf_s("%d", &m);
 
-	printf("Введите коэффициенты уравнений системы:\n");
-	float** array = (float**)malloc(m * sizeof(float*)); // выделение памяти под исходный массив коэффициентов
-	// Ввод элементов массива
+	printf("Enter coeffs of equations of the system:\n");
+	float** array = (float**)malloc(m * sizeof(float*)); 
 	for (int i = 0; i < m; i++) {
 		array[i] = (float*)malloc(m * sizeof(float));
 		for (int j = 0; j < m; j++) { 
@@ -72,17 +69,17 @@ int main()
 			scanf_s("%f", &array[i][j]);
 		}
 	}
-	float* b = (float*)calloc(m, sizeof(float)); // выделение памяти под вектор правых частей
-	float* det = (float*)calloc(m, sizeof(float)); // память под определители
-	//Ввод вектора правых частей
-	printf("Введите вектор правых частей:\n");
+	float* b = (float*)calloc(m, sizeof(float)); 
+	float* det = (float*)calloc(m, sizeof(float)); 
+
+	printf("Enter vector right parts:\n");
 	for (int i = 0; i < m; i++) { 
 		printf("answer[%d] = ", i);
 		scanf_s("%f", &b[i]);
 	}
 	printf("\n");
-	//Вывод исходной матрицы
-	printf("Исходная матрица коэффициентов:\n");
+
+	printf("Initial coeff matrix:\n");
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < m; j++) {
 			printf("%2.2f ", array[i][j]);
@@ -90,18 +87,18 @@ int main()
 		printf("\n");
 	}
 
-	float** bmass = (float**)malloc(m * sizeof(float*)); // массив, в который будем подставлять вектор правых частей
+	float** bmass = (float**)malloc(m * sizeof(float*)); 
 	for (int i = 0; i < m; i++)
 		bmass[i] = (float*)malloc(m * sizeof(float));
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < m; j++)
 			bmass[i][j] = array[i][j];
 	}
-	//Определитель из начальных коэффициентов
+
 	det[0] = Determ(bmass, m, b);
 	if (det[0] == 0){
-		printf("Определитель det = %.2f \n", det[0]);
-		printf("Особенная матрица! \n");
+		printf("Determ = %.2f \n", det[0]);
+		printf("Special Matrix! \n");
 		for (int i = 0; i < m; i++) {
 			free(array[i]);
 			free(bmass[i]);
@@ -112,9 +109,9 @@ int main()
 		free(det);
 		return 0;
 	}
-	printf("Определитель det = %.2f \n", det[0]);
+	printf("Determ = %.2f \n", det[0]);
 	printf("\n");
-	printf("Далее произведется последовательная замена столбцов исходной матрицы на вектор правых частей.\n");
+	printf("Next, the columns of the original matrix will be sequentially replaced by the vector of right parts.\n");
 	for (int j = 0; j < m; j++) {
 		for (int i = 0; i < m; i++)
 			bmass[i][j] = b[i];
@@ -125,12 +122,12 @@ int main()
 			printf("\n");
 		}
 		det[j + 1] = Determ(bmass, m, b);
-		printf("Определитель det(%d) = %.2f \n", j+1, det[j + 1]);
+		printf("Determ(%d) = %.2f \n", j+1, det[j + 1]);
 		printf("\n");
 		for (int i = 0; i < m; i++)
 			bmass[i][j] = array[i][j];
 	}
-	printf("Ответ: \n");
+	printf("Answer: \n");
 	for (int i = 1; i < m + 1; i++) {
 		printf("X(%d) = %.2f \n", i, det[i] / det[0]);
 	}
